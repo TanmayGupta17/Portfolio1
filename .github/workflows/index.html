@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tanmay Gupta</title>
+    <link rel="icon" href="./fevicon.jpg" type="image/x-icon">
+    <script src="https://unpkg.com/kaplay@3000.1.17/dist/kaboom.mjs"></script>
+    <style>
+        @font-face {
+            font-family: monogram;
+            src: url(monogram.ttf);
+        }
+
+        body {
+            font-family: monogram, monospace;
+            font-size: 2rem;
+            overflow: hidden;
+            margin: 0; /* Ensure no default margin */
+        }
+
+        .box {
+            width: 25%;
+            height: 75%;
+            background-color: rgba(247, 161, 0, 0.959);
+            position: fixed;
+            top: 50%;
+            right: 100px;
+            transform: translateY(-50%);
+            z-index: 0;
+            padding: 10px; /* Add padding for content */
+            box-sizing: border-box; /* Include padding in width */
+            box-shadow: 10px 10px;
+        }
+
+        nav {
+            width: 100%;
+            background-color: #45474B;
+            color: #F5F7F8;
+            padding: 1rem;
+            text-align: left;
+            font-size: 4.5rem; /* Adjust font size */
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            box-sizing: border-box;
+        }
+
+        #textbox {
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            bottom: 2vh;
+            min-height: 10vh;
+            background: white;
+            border-radius: 3px;
+            outline-style: solid;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+            word-spacing: 0.2rem;
+            filter: drop-shadow(0 0 0.75rem rgb(112, 112, 112));
+        }
+
+        .ui-text {
+            margin: 0;
+            user-select: none;
+        }
+
+        .ui-close-btn {
+            font-family: monogram, monospace;
+            border-style: none;
+            border-radius: 3px;
+            padding: 1rem;
+            font-size: inherit;
+        }
+
+        .btn-container {
+            align-self: flex-end;
+            margin-top: 1rem;
+        }
+
+        .note {
+            position: absolute;
+            left: 5%;
+            top: 1vh;
+            display: flex;
+            flex-direction: column;
+            color: rgb(238, 238, 238);
+        }
+
+        .box h2{
+          border: 2px solid black;
+          text-align: left;
+          padding-left: 10px;
+          margin-top: 15px;
+          font-weight: 3px;
+
+        }
+
+        .box h3{
+          text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+      <a href="./TanmayGupta_220953470_Computer&CommunicationEngg.pdf" target="_blank" style="text-decoration: none; color: white;">Tanmay Gupta</a>
+</nav>
+    </nav>
+    <div id="app">
+        <div class="box">
+            <h2>About</h2>
+            <h3>Welcome to my portfolio!</h3>
+            <ul>
+              <li>Download my latest <a href="./TanmayGupta_220953470_Computer&CommunicationEngg.pdf" target="_blank" style="color:black">Resume</a> or play around to know more about me</li>
+              <li>Each Room in this map reflects a part of my personal story.</li>
+              <li>Explore the rooms through the character to discover more about me.</li>
+            </ul>
+            <h3>Controls</h3>
+            <ul>
+              <li>Tap/Click around to move</li>
+              <li>You can also use arrow keys</li>
+            </ul>
+        </div>
+        <div>
+            <p class="note">Tap/Click around to move</p>
+
+            <div id="textbox-container" style="display: none">
+                <div id="textbox">
+                    <p id="dialogue" class="ui-text"></p>
+                    <div class="btn-container">
+                      <button id="close" class="ui-close-btn">Enter to Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <canvas id="game"></canvas>
+    </div>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

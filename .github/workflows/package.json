@@ -1,0 +1,22 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "predeploy": "npm install",
+    "deploy": "gh-pages -d build",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1",
+    "terser": "^5.31.2",
+    "vite": "^5.3.3"
+  },
+  "dependencies": {
+    "kaboom": "^3000.1.17",
+    "kaplay": "^3001.0.0-alpha.17"
+  }
+}
