@@ -2,10 +2,10 @@ export const scaleFactor = 1.3;
 // export const PlayerscaleFactor = 4;
 
 export const dialogueData = {
-    "Summary": "Hey! I just finished my second year in Computer and Communication Engineering at Manipal Institute of Technology (MIT). This journey has really helped me build a strong foundation and confidence in Data Structures, as well as sharpen my critical thinking and problem-solving skills.",
-    "Projects":"I've built some really cool projects, like a personal voice assistant called Jarvis, a property rental website named LeaseLink, and an algorithm visualizer that showcases sorting and graph traversal algorithms. For more interesting projects, check out my <a href=https://github.com/TanmayGupta17>GitHub</a>!",
-    "Education":"I completed my 10th and 12th grades under the Central Board of Secondary Education (CBSE).which provided a strong educational framework and academic rigor. These formative years were instrumental in nurturing my interest in computer science and engineering. Currently, I am pursuing a degree in Computer and Communication Engineering at the Manipal Institute of Technology (MIT). Here, I am continuously expanding my knowledge and honing my skills in this dynamic and ever-evolving field.",
-    "Skills":"Over the years, I’ve honed my skills in various programming languages such as C, Java, C#, Python, MySQL, HTML, CSS, and JavaScript. Alongside these, I’ve become proficient in using tools like Git, GitHub, VSCode, and Visual Studio, which have greatly enhanced my coding and development workflow.",
+    "Summary": "Hey 👋 I’m Tanmay. I’m a Computer and Communication Engineering student at MIT who likes building things that people actually use. I spend most of my time turning vague ideas into working products, breaking stuff along the way, and learning fast from it 🚀",
+    "Projects": "I’ve worked on a few projects that blend technology with real-world use cases. Some of my key projects include Jarvis, a personal voice assistant; LeaseLink, a property rental web platform; and Stonks, a gamified way to learn the stock market, designed to make investing concepts more engaging and beginner-friendly. Each project helped me strengthen my understanding of backend logic, system design, and building user-focused products.For more interesting projects, check out my <a href=https://github.com/TanmayGupta17>GitHub</a>!",
+    "Education": "I completed my 10th and 12th grades under the Central Board of Secondary Education (CBSE).which provided a strong educational framework and academic rigor. These formative years were instrumental in nurturing my interest in computer science and engineering. Currently, I am pursuing a degree in Computer and Communication Engineering at the Manipal Institute of Technology (MIT). Here, I am continuously expanding my knowledge and honing my skills in this dynamic and ever-evolving field.",
+    "Skills": "Over the years, I’ve worked with programming languages such as Java, Python, C, C#, JavaScript, and MySQL, along with front-end technologies like HTML and CSS. I’ve also built applications using frameworks and tools like Node.js, Express, React, Next.js, and MongoDB. Alongside this, I regularly use Git, GitHub, VS Code, and Visual Studio, which have helped me collaborate better and maintain an efficient development workflow",
     "ContactMe": `<h3>Contact Me</h3>
     <div style="display: flex; margin-right: 10px;">
         <div class="Email" style="border: 2px solid #333; padding: 5px 10px; border-radius: 10px; width: 125px; background-color: #e30d0d; color: white; height: 40px;">
@@ -27,7 +27,7 @@ export const dialogueData = {
             </p>
         </div>
     </div>`
-    
+
 
     //education: i did my 10 and 12th from central board of secondary education
     // <span style="margin-left: 5px;">↗</span>
@@ -62,4 +62,4 @@ export const dialogueData = {
     // library: `There are a lot of programming books on my shelves. There is even one in French (I also speak French btw).
     // I probably only read one of them. Who else compulsively buys technical books without ever finishing them?`,
     // exit: `If you want to exit JSLegendDev's portfolio, just close the tab.`,
-  };
+};

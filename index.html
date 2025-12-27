@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
 
@@ -17,7 +18,8 @@
             font-family: monogram, monospace;
             font-size: 2rem;
             overflow: hidden;
-            margin: 0; /* Ensure no default margin */
+            margin: 0;
+            /* Ensure no default margin */
         }
 
         .box {
@@ -25,14 +27,22 @@
             height: 75%;
             background-color: rgba(247, 161, 0, 0.959);
             position: fixed;
-            top: 50%;
-            right: 100px;
+            top: 55%;
+            right: 50px;
             transform: translateY(-50%);
             z-index: 0;
-            padding: 10px; /* Add padding for content */
-            box-sizing: border-box; /* Include padding in width */
+            padding: 10px;
+            box-sizing: border-box;
             box-shadow: 10px 10px;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
+
+        .box::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        
 
         nav {
             width: 100%;
@@ -40,7 +50,8 @@
             color: #F5F7F8;
             padding: 1rem;
             text-align: left;
-            font-size: 4.5rem; /* Adjust font size */
+            font-size: 4.5rem;
+            /* Adjust font size */
             position: fixed;
             top: 0;
             left: 0;
@@ -100,38 +111,40 @@
             color: rgb(238, 238, 238);
         }
 
-        .box h2{
-          border: 2px solid black;
-          text-align: left;
-          padding-left: 10px;
-          margin-top: 15px;
-          font-weight: 3px;
+        .box h2 {
+            border: 2px solid black;
+            text-align: left;
+            padding-left: 10px;
+            margin-top: 15px;
+            font-weight: 3px;
 
         }
 
-        .box h3{
-          text-decoration: underline;
+        .box h3 {
+            text-decoration: underline;
         }
     </style>
 </head>
+
 <body>
     <nav>
-      <a href="./TanmayGupta_220953470_Computer&CommunicationEngg.pdf" target="_blank" style="text-decoration: none; color: white;">Tanmay Gupta</a>
-</nav>
+        <a href="./TanmayGupta_Resume.pdf" target="_blank" style="text-decoration: none; color: white;">Tanmay Gupta</a>
+    </nav>
     </nav>
     <div id="app">
         <div class="box">
             <h2>About</h2>
             <h3>Welcome to my portfolio!</h3>
             <ul>
-              <li>Download my latest <a href="./TanmayGupta_220953470_Computer&CommunicationEngg.pdf" target="_blank" style="color:black">Resume</a> or play around to know more about me</li>
-              <li>Each Room in this map reflects a part of my personal story.</li>
-              <li>Explore the rooms through the character to discover more about me.</li>
+                <li>Download my latest <a href="./TanmayGupta_220953470_Computer&CommunicationEngg.pdf" target="_blank"
+                        style="color:black">Resume</a> or play around to know more about me</li>
+                <li>Each Room in this map reflects a part of my personal story.</li>
+                <li>Explore the rooms through the character to discover more about me.</li>
             </ul>
             <h3>Controls</h3>
             <ul>
-              <li>Tap/Click around to move</li>
-              <li>You can also use arrow keys</li>
+                <li>Tap/Click around to move</li>
+                <li>You can also use arrow keys</li>
             </ul>
         </div>
         <div>
@@ -141,7 +154,7 @@
                 <div id="textbox">
                     <p id="dialogue" class="ui-text"></p>
                     <div class="btn-container">
-                      <button id="close" class="ui-close-btn">Enter to Close</button>
+                        <button id="close" class="ui-close-btn">Enter to Close</button>
                     </div>
                 </div>
             </div>
@@ -150,4 +163,5 @@
     </div>
     <script type="module" src="./main.js"></script>
 </body>
+
 </html>
