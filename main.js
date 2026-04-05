@@ -1,6 +1,6 @@
 import { dialogueData, scaleFactor } from "./constants.js";
 import { k } from "./kaboomCtx.js";
-import { displayDialogue, setCamScale } from "./utils.js";
+import { displayDialogue } from "./utils.js";
 
 
 // Define custom scale factor for player
@@ -90,6 +90,7 @@ k.scene("main", async () => {
     let lastAutoMovePos = null;
     let stuckSeconds = 0;
     let pendingRoomDialogue = null;
+    let lastPointerClientPos = null;
     const obstacleRects = [];
     const interactiveZones = [];
     const titleHotspots = [];
@@ -145,6 +146,34 @@ k.scene("main", async () => {
     const playerColliderHeight = playerCollisionBox.height * customScaleFactor;
     const playerColliderOffsetX = playerCollisionBox.offsetX * customScaleFactor;
     const playerColliderOffsetY = playerCollisionBox.offsetY * customScaleFactor;
+    const canvasEl = document.getElementById("game");
+
+    function isMobileRotatedView() {
+      return window.innerWidth <= 700;
+    }
+
+    function getPointerWorldPos() {
+      if (!isMobileRotatedView() || !canvasEl || !lastPointerClientPos) {
+        return k.toWorld(k.mousePos());
+      }
+
+      const rect = canvasEl.getBoundingClientRect();
+      const normalizedX = clamp(
+        (lastPointerClientPos.x - rect.left) / rect.width,
+        0,
+        1
+      );
+      const normalizedY = clamp(
+        (lastPointerClientPos.y - rect.top) / rect.height,
+        0,
+        1
+      );
+
+      const localX = normalizedY * k.width();
+      const localY = (1 - normalizedX) * k.height();
+
+      return k.toWorld(k.vec2(localX, localY));
+    }
 
     function worldToMapGrid(worldPos) {
       const mapX = worldPos.x / scaleFactor;
@@ -640,36 +669,99 @@ k.scene("main", async () => {
 
     rebuildNavGrid();
 
-    // Set camera to a fixed position and zoom out to show the entire map
-    const canvasWidth = k.width();
-    const canvasHeight = k.height();
-    const cameraScale = Math.min(
-      canvasWidth / mapWidth,
-      canvasHeight / mapHeight
-    );
+    const worldMapWidth = mapWidth * scaleFactor;
+    const worldMapHeight = mapHeight * scaleFactor;
+    const cameraState = {
+      zoomStep: 0.2,
+      zoomMultiplier: 1,
+      currentMode: "desktop",
+      minZoomMultiplier: 0.7,
+      maxZoomMultiplier: 2.6,
+    };
 
-    k.camScale(cameraScale);
+    function getCameraMode() {
+      const viewportWidth = window.innerWidth;
+      if (viewportWidth <= 700) return "mobile";
+      if (viewportWidth <= 1100) return "tablet";
+      return "desktop";
+    }
 
-    // Set the camera position to the center of the map or any fixed position
-    k.camPos(mapWidth / 1, mapHeight / 2); // Center camera on the map
+    function getBaseCameraScale(mode = getCameraMode()) {
+      if (mode === "desktop") {
+        return Math.min(k.width() / mapWidth, k.height() / mapHeight);
+      }
 
-    // Handle camera scaling on window resize
-    k.onResize(() => {
-      const newCanvasWidth = k.width();
-      const newCanvasHeight = k.height();
-      const newCameraScale = Math.min(
-        newCanvasWidth / mapWidth,
-        newCanvasHeight / mapHeight
+      if (mode === "mobile") {
+        return Math.max(k.height() / worldMapWidth, k.width() / worldMapHeight);
+      }
+
+      return Math.max(
+        k.width() / worldMapWidth,
+        k.height() / worldMapHeight
       );
+    }
 
-      k.camScale(newCameraScale);
-      k.camPos(mapWidth / 2, mapHeight / 2); // Re-center camera on the map
+    function clampCameraPos(pos, scale) {
+      const halfViewportWidth = k.width() / (2 * scale);
+      const halfViewportHeight = k.height() / (2 * scale);
+
+      return k.vec2(
+        worldMapWidth <= halfViewportWidth * 2
+          ? worldMapWidth / 2
+          : clamp(pos.x, halfViewportWidth, worldMapWidth - halfViewportWidth),
+        worldMapHeight <= halfViewportHeight * 2
+          ? worldMapHeight / 2
+          : clamp(pos.y, halfViewportHeight, worldMapHeight - halfViewportHeight)
+      );
+    }
+
+    function applyCamera() {
+      cameraState.currentMode = getCameraMode();
+
+      if (cameraState.currentMode === "desktop") {
+        k.camScale(getBaseCameraScale("desktop"));
+        k.camPos(mapWidth / 1, mapHeight / 2);
+        return;
+      }
+
+      if (cameraState.currentMode === "mobile") {
+        k.camScale(getBaseCameraScale("mobile"));
+        k.camPos(worldMapWidth / 2, worldMapHeight / 2);
+        return;
+      }
+
+      const overviewScale = getBaseCameraScale(cameraState.currentMode);
+      k.camScale(overviewScale);
+      k.camPos(worldMapWidth / 2, worldMapHeight / 2);
+    }
+
+    function setZoomMultiplier(nextZoom) {
+      if (cameraState.currentMode !== "desktop") return;
+      cameraState.zoomMultiplier = clamp(
+        nextZoom,
+        cameraState.minZoomMultiplier,
+        cameraState.maxZoomMultiplier
+      );
+      applyCamera();
+    }
+
+    window.portfolioZoomIn = () =>
+      setZoomMultiplier(cameraState.zoomMultiplier + cameraState.zoomStep);
+    window.portfolioZoomOut = () =>
+      setZoomMultiplier(cameraState.zoomMultiplier - cameraState.zoomStep);
+    window.portfolioZoomReset = () => {
+      if (cameraState.currentMode === "desktop") return;
+      setZoomMultiplier(1);
+    };
+
+    applyCamera();
+
+    k.onResize(() => {
+      applyCamera();
     });
 
-    // No update for the camera position to keep it fixed
-    // Remove the k.onUpdate callback for camera
-
     k.onUpdate(() => {
+      applyCamera();
       if (player.isInDialogue || autoMovePath.length === 0) return;
 
       const nextWaypoint = autoMovePath[0];
@@ -723,7 +815,7 @@ k.scene("main", async () => {
     function navigateToMouseClick() {
       if (player.isInDialogue) return;
 
-      const worldMousePos = k.toWorld(k.mousePos());
+      const worldMousePos = getPointerWorldPos();
       const clickedInteractiveZone = findInteractiveZoneAtWorldPos(worldMousePos);
       const clickedTitleHotspot = findTitleHotspotAtWorldPos(worldMousePos);
       const clickedRoomZone = findRoomClickZoneAtWorldPos(worldMousePos);
@@ -744,6 +836,14 @@ k.scene("main", async () => {
     }
 
     // Mouse and keyboard controls for player movement
+    window.addEventListener(
+      "pointerdown",
+      (event) => {
+        lastPointerClientPos = { x: event.clientX, y: event.clientY };
+      },
+      { passive: true }
+    );
+
     k.onMousePress("left", navigateToMouseClick);
 
     // Stop player animations on mouse release

@@ -20,6 +20,19 @@
             margin: 0;
         }
 
+        #game {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+
+        #game-shell {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            background: #FDFFC2;
+        }
+
         /* ── ORIGINAL BOX — restored exactly, with overflow fix so Controls heading doesn't clip ── */
         .box {
             width: 25%;
@@ -36,6 +49,10 @@
             overflow-y: auto;
             /* was: hidden — changed to auto so content isn't clipped */
             overflow-x: hidden;
+        }
+
+        .box-toggle {
+            display: none;
         }
 
         .box::-webkit-scrollbar {
@@ -57,14 +74,80 @@
             position: fixed;
             top: 0;
             left: 0;
+            box-sizing: border-box;
             z-index: 1000;
+        }
+
+        .nav-inner {
+            display: block;
+        }
+
+        .menu-toggle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 54px;
+            height: 54px;
+            padding: 0;
+            border: 2px solid #f5f7f8;
+            background: transparent;
+            cursor: pointer;
+            box-shadow: 4px 4px #222;
+        }
+
+        .menu-toggle-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .menu-toggle-line {
+            width: 24px;
+            height: 3px;
+            background: #f5f7f8;
+        }
+
+        .zoom-controls {
+            position: fixed;
+            top: 96px;
+            left: 16px;
+            z-index: 1200;
+            display: none;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .zoom-btn {
+            font-family: monogram, monospace;
+            font-size: 1.25rem;
+            min-width: 52px;
+            min-height: 44px;
+            border: 2px solid #111;
+            background: rgba(255, 193, 7, 0.95);
+            color: #111;
+            box-shadow: 4px 4px #111;
+            cursor: pointer;
+        }
+
+        .zoom-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px #111;
         }
 
         #app {
             width: 100%;
             height: 100%;
             position: absolute;
+            left: 0;
             box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        #game-ui {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
         }
 
         #textbox {
@@ -85,6 +168,187 @@
             word-spacing: 0.2rem;
             filter: drop-shadow(0 0 0.75rem rgb(112, 112, 112));
             overflow: hidden;
+            pointer-events: auto;
+        }
+
+        @media (min-width: 1101px) {
+            #textbox {
+                left: 3%;
+                right: calc(25% + 90px);
+            }
+        }
+
+        @media (max-width: 1100px) {
+            body {
+                font-size: 1.4rem;
+            }
+
+            nav {
+                padding: 0.8rem 1rem;
+                font-size: clamp(2.2rem, 6vw, 3.3rem);
+            }
+
+            .nav-inner {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+            }
+
+            .menu-toggle {
+                display: inline-flex;
+                flex-shrink: 0;
+            }
+
+            .box {
+                width: calc(100% - 20px);
+                height: auto;
+                max-height: min(34vh, 260px);
+                left: 10px;
+                right: 10px;
+                top: 88px;
+                transform: translateY(calc(-100% - 18px));
+                z-index: 1100;
+                padding: 12px 14px 14px;
+                transition: transform 0.2s ease;
+                box-shadow: 8px 8px;
+            }
+
+            body.panel-open .box {
+                transform: translateY(0);
+            }
+
+            #textbox {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                max-height: min(34vh, 280px);
+                min-height: 0;
+                z-index: 40;
+            }
+
+            .note {
+                display: none;
+            }
+
+            #admin-panel {
+                width: min(92vw, 520px);
+            }
+
+            .zoom-controls {
+                display: none;
+            }
+
+            #app {
+                position: fixed;
+                top: 82px;
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 82px);
+            }
+
+            #game-ui {
+                inset: 0;
+            }
+        }
+
+        @media (max-width: 700px) {
+            body {
+                font-size: 1rem;
+            }
+
+            nav {
+                font-size: clamp(1.8rem, 8vw, 2.8rem);
+                padding: 0.75rem;
+            }
+
+            .box {
+                width: calc(100% - 20px);
+                max-height: min(42vh, 300px);
+                top: 72px;
+                left: 10px;
+                right: 10px;
+                box-shadow: 6px 6px;
+                padding: 12px;
+            }
+
+            #textbox {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                max-height: min(36vh, 250px);
+            }
+
+            .menu-toggle {
+                width: 46px;
+                height: 46px;
+                box-shadow: 3px 3px #222;
+            }
+
+            .menu-toggle-line {
+                width: 20px;
+            }
+
+            #app {
+                top: 68px;
+                height: calc(100vh - 68px);
+            }
+
+            #game {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: calc(100vh - 68px);
+                height: 100vw;
+                transform: translate(-50%, -50%) rotate(90deg);
+                transform-origin: center center;
+            }
+
+            .gb-row {
+                flex-direction: column;
+            }
+
+            #admin-panel {
+                width: calc(100vw - 20px);
+                max-height: 80vh;
+                padding: 14px;
+            }
+
+            .btn-container {
+                align-self: stretch;
+            }
+
+            .ui-close-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 0.9rem;
+            }
+
+            nav {
+                font-size: clamp(1.5rem, 9vw, 2.2rem);
+            }
+
+            .box {
+                top: 64px;
+                max-height: 46vh;
+            }
+
+            #textbox {
+                padding: 0.75rem;
+                max-height: 30vh;
+            }
+
+            #dialogue {
+                padding-right: 0;
+            }
+
+            .guestbook-form {
+                padding: 10px;
+            }
         }
 
         #dialogue {
@@ -128,6 +392,7 @@
             display: flex;
             flex-direction: column;
             color: rgb(238, 238, 238);
+            pointer-events: none;
         }
 
         .box h2 {
@@ -183,6 +448,10 @@
             border-color: #f7a100;
         }
 
+        .gb-row.stack {
+            flex-direction: column;
+        }
+
         .gb-textarea {
             width: 100%;
             background: #fff;
@@ -227,6 +496,13 @@
 
         .gb-success {
             color: #2e7d32;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .gb-error {
+            color: #b42318;
             font-size: 0.85rem;
             margin-top: 5px;
             display: none;
@@ -379,9 +655,25 @@
 
 <body>
     <nav>
-        <a href="https://drive.google.com/uc?export=download&id=1356MzWXQWdQB-ywZRAXKHGvIYmfqzih1" target="_blank"
-            id="resume-nav-link" style="text-decoration: none; color: white;">Tanmay Gupta</a>
+        <div class="nav-inner">
+            <a href="https://drive.google.com/uc?export=download&id=1356MzWXQWdQB-ywZRAXKHGvIYmfqzih1" target="_blank"
+                id="resume-nav-link" style="text-decoration: none; color: white;">Tanmay Gupta</a>
+            <button class="menu-toggle" id="menu-toggle-btn" type="button" aria-label="Toggle instructions"
+                aria-expanded="false">
+                <span class="menu-toggle-lines" aria-hidden="true">
+                    <span class="menu-toggle-line"></span>
+                    <span class="menu-toggle-line"></span>
+                    <span class="menu-toggle-line"></span>
+                </span>
+            </button>
+        </div>
     </nav>
+
+    <div class="zoom-controls" aria-label="Map zoom controls">
+        <button class="zoom-btn" id="zoom-out-btn" type="button">-</button>
+        <button class="zoom-btn" id="zoom-reset-btn" type="button">100%</button>
+        <button class="zoom-btn" id="zoom-in-btn" type="button">+</button>
+    </div>
 
     <div id="app">
         <!-- ORIGINAL SIDEBAR — restored, overflow fixed so Controls heading no longer clips -->
@@ -398,15 +690,15 @@
             </ul>
             <h3 style="margin-top: 6px;">Controls</h3>
             <ul>
-                <li><button id="go-contact-btn"
-                        style="font-family: monogram, monospace; font-size: 0.9rem; background: #45474B; color: #fff; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer;">Go
-                        to Contact</button></li>
                 <li>Tap/Click around to move</li>
                 <li>You can also use arrow keys</li>
             </ul>
         </div>
 
-        <div>
+        <div id="game-shell">
+            <canvas id="game"></canvas>
+        </div>
+        <div id="game-ui">
             <p class="note">Tap/Click around to move</p>
             <div id="textbox-container" style="display: none">
                 <div id="textbox">
@@ -417,8 +709,6 @@
                 </div>
             </div>
         </div>
-
-        <canvas id="game"></canvas>
     </div>
 
     <!-- Guestbook template (cloned into ContactMe dialogue) -->
@@ -429,10 +719,15 @@
                 <input class="gb-input" id="gb-name" type="text" placeholder="Your name *" maxlength="50"
                     autocomplete="off" />
             </div>
+            <div class="gb-row">
+                <input class="gb-input" id="gb-email" type="email" placeholder="Your email *" maxlength="120"
+                    autocomplete="off" />
+            </div>
             <textarea class="gb-textarea" id="gb-msg" placeholder="Write a short note... (optional)"
                 maxlength="200"></textarea>
             <button class="gb-submit" id="gb-send">Send Message ✉</button>
-            <p class="gb-success" id="gb-ok">✅ Saved! Thanks for visiting 🙌</p>
+            <p class="gb-success" id="gb-ok">✅ Message sent! I’ll receive it by email.</p>
+            <p class="gb-error" id="gb-error">❌ Message could not be sent right now. Please try again.</p>
         </div>
     </template>
 
@@ -462,6 +757,9 @@
             const VISITS_KEY = "tg_portfolio_visits";
             const GB_KEY = "tg_portfolio_guestbook";
             const DL_KEY = "tg_portfolio_downloads";
+            const CONTACT_EMAIL = "TanmayGupta1706@gmail.com";
+            const CONTACT_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
+            const bodyEl = document.body;
             const navigateToRoom = (room) => {
                 if (!room) return;
 
@@ -474,12 +772,43 @@
                 window.dispatchEvent(new CustomEvent("portfolio:navigate-room", { detail: { room } }));
             };
 
-            const goContactBtn = document.getElementById("go-contact-btn");
-            if (goContactBtn) {
-                goContactBtn.addEventListener("click", () => {
-                    navigateToRoom("ContactMe");
+            const zoomInBtn = document.getElementById("zoom-in-btn");
+            const zoomOutBtn = document.getElementById("zoom-out-btn");
+            const zoomResetBtn = document.getElementById("zoom-reset-btn");
+            const menuToggleBtn = document.getElementById("menu-toggle-btn");
+            if (zoomInBtn) zoomInBtn.addEventListener("click", () => window.portfolioZoomIn?.());
+            if (zoomOutBtn) zoomOutBtn.addEventListener("click", () => window.portfolioZoomOut?.());
+            if (zoomResetBtn) zoomResetBtn.addEventListener("click", () => window.portfolioZoomReset?.());
+
+            const infoBox = document.querySelector(".box");
+            const isCompactLayout = () => window.innerWidth <= 1100;
+            const syncResponsivePanelState = () => {
+                if (isCompactLayout()) {
+                    bodyEl.classList.remove("panel-open");
+                    if (menuToggleBtn) menuToggleBtn.setAttribute("aria-expanded", "false");
+                } else {
+                    bodyEl.classList.remove("panel-open");
+                    if (menuToggleBtn) menuToggleBtn.setAttribute("aria-expanded", "false");
+                }
+            };
+            syncResponsivePanelState();
+            window.addEventListener("resize", syncResponsivePanelState);
+
+            if (menuToggleBtn) {
+                menuToggleBtn.addEventListener("click", () => {
+                    if (!isCompactLayout()) return;
+                    const willOpen = !bodyEl.classList.contains("panel-open");
+                    bodyEl.classList.toggle("panel-open", willOpen);
+                    menuToggleBtn.setAttribute("aria-expanded", willOpen ? "true" : "false");
                 });
             }
+
+            document.addEventListener("click", (event) => {
+                if (!isCompactLayout() || !bodyEl.classList.contains("panel-open")) return;
+                if (infoBox?.contains(event.target) || menuToggleBtn?.contains(event.target)) return;
+                bodyEl.classList.remove("panel-open");
+                if (menuToggleBtn) menuToggleBtn.setAttribute("aria-expanded", "false");
+            });
 
             const getVisits = () => { try { return JSON.parse(localStorage.getItem(VISITS_KEY)) || []; } catch (e) { return []; } };
             const getGB = () => { try { return JSON.parse(localStorage.getItem(GB_KEY)) || []; } catch (e) { return []; } };
@@ -549,16 +878,61 @@
                 const clone = document.getElementById("guestbook-tpl").content.cloneNode(true);
                 dialogue.appendChild(clone);
 
-                document.getElementById("gb-send").addEventListener("click", () => {
-                    const name = (document.getElementById("gb-name").value || "").trim();
-                    const msg = (document.getElementById("gb-msg").value || "").trim();
-                    if (!name) { document.getElementById("gb-name").focus(); return; }
-                    const gb = getGB();
-                    gb.unshift({ time: new Date().toLocaleString(), name, msg });
-                    if (gb.length > 100) gb.length = 100;
-                    saveGB(gb);
-                    document.getElementById("gb-send").disabled = true;
-                    document.getElementById("gb-ok").style.display = "block";
+                document.getElementById("gb-send").addEventListener("click", async () => {
+                    const nameInput = document.getElementById("gb-name");
+                    const emailInput = document.getElementById("gb-email");
+                    const msgInput = document.getElementById("gb-msg");
+                    const sendBtn = document.getElementById("gb-send");
+                    const successMsg = document.getElementById("gb-ok");
+                    const errorMsg = document.getElementById("gb-error");
+                    const name = (nameInput.value || "").trim();
+                    const email = (emailInput.value || "").trim();
+                    const msg = (msgInput.value || "").trim();
+
+                    successMsg.style.display = "none";
+                    errorMsg.style.display = "none";
+
+                    if (!name) { nameInput.focus(); return; }
+                    if (!email) { emailInput.focus(); return; }
+
+                    sendBtn.disabled = true;
+
+                    try {
+                        const response = await fetch(CONTACT_ENDPOINT, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json",
+                            },
+                            body: JSON.stringify({
+                                name,
+                                email,
+                                message: msg || "(No message provided)",
+                                _subject: "New portfolio contact message",
+                                _replyto: email,
+                            }),
+                        });
+
+                        const result = await response.json().catch(() => null);
+                        if (!response.ok || !result?.success) {
+                            throw new Error(result?.message || "Email send failed");
+                        }
+
+                        const gb = getGB();
+                        gb.unshift({ time: new Date().toLocaleString(), name, email, msg });
+                        if (gb.length > 100) gb.length = 100;
+                        saveGB(gb);
+
+                        sendBtn.disabled = true;
+                        successMsg.style.display = "block";
+                        nameInput.value = "";
+                        emailInput.value = "";
+                        msgInput.value = "";
+                    } catch (error) {
+                        console.error("Guestbook email send failed:", error);
+                        sendBtn.disabled = false;
+                        errorMsg.style.display = "block";
+                    }
                 });
             });
             gbObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["style"] });
@@ -616,13 +990,32 @@
                 }
             });
 
-            /* Secret: Ctrl + Shift + A → asks for PIN */
+            /* Secret: type "admin" anywhere → asks for PIN */
             const ADMIN_PIN = (import.meta.env.VITE_ADMIN_PIN || "").trim();
-            let pinBuffer = "";
+            const ADMIN_TRIGGER = "admin";
+            let adminKeyBuffer = "";
 
             document.addEventListener("keydown", e => {
-                if (e.ctrlKey && e.shiftKey && e.key === "A") {
-                    e.preventDefault();
+                const activeTag = document.activeElement?.tagName;
+                const isTypingField =
+                    activeTag === "INPUT" ||
+                    activeTag === "TEXTAREA" ||
+                    document.activeElement?.isContentEditable;
+
+                if (isTypingField) return;
+
+                if (e.key === "Escape") {
+                    adminKeyBuffer = "";
+                    return;
+                }
+
+                if (e.key.length !== 1 || e.ctrlKey || e.metaKey || e.altKey) {
+                    return;
+                }
+
+                adminKeyBuffer = (adminKeyBuffer + e.key.toLowerCase()).slice(-ADMIN_TRIGGER.length);
+                if (adminKeyBuffer === ADMIN_TRIGGER) {
+                    adminKeyBuffer = "";
                     showPinPrompt();
                 }
             });

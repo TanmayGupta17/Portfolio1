@@ -24,15 +24,18 @@ export function displayDialogue(text, onDisplayEnd) {
       dialogue.innerHTML = "";
       clearInterval(intervalRef);
       closeBtn.removeEventListener("click", onCloseBtnClick);
+      removeEventListener("keydown", onDialogueKeyDown);
     }
   
     closeBtn.addEventListener("click", onCloseBtnClick);
   
-    addEventListener("keypress", (key) => {
-      if (key.code === "Enter") {
+    function onDialogueKeyDown(key) {
+      if (key.code === "Enter" || key.code === "Escape") {
         closeBtn.click();
       }
-    });
+    }
+
+    addEventListener("keydown", onDialogueKeyDown);
   }
   
   export function setCamScale(k) {
