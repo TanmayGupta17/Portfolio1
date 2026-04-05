@@ -40,7 +40,7 @@ jobs:
       - name: Create .env
         run: echo "VITE_ADMIN_PIN=${{ secrets.VITE_ADMIN_PIN }}" > .env
       - name: Build
-        run: npm run build
+        run: npm run build -- --base=/Portfolio1/
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
