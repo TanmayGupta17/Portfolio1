@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanmay Gupta</title>
     <link rel="icon" href="./fevicon.jpg" type="image/x-icon">
@@ -19,9 +18,9 @@
             font-size: 2rem;
             overflow: hidden;
             margin: 0;
-            /* Ensure no default margin */
         }
 
+        /* ── ORIGINAL BOX — restored exactly, with overflow fix so Controls heading doesn't clip ── */
         .box {
             width: 25%;
             height: 75%;
@@ -30,11 +29,12 @@
             top: 55%;
             right: 50px;
             transform: translateY(-50%);
-            z-index: 0;
+            z-index: 20;
             padding: 10px;
             box-sizing: border-box;
             box-shadow: 10px 10px;
             overflow-y: auto;
+            /* was: hidden — changed to auto so content isn't clipped */
             overflow-x: hidden;
         }
 
@@ -42,7 +42,10 @@
             width: 8px;
         }
 
-        
+        .box::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 4px;
+        }
 
         nav {
             width: 100%;
@@ -51,7 +54,6 @@
             padding: 1rem;
             text-align: left;
             font-size: 4.5rem;
-            /* Adjust font size */
             position: fixed;
             top: 0;
             left: 0;
@@ -71,17 +73,34 @@
             right: 10%;
             bottom: 2vh;
             min-height: 10vh;
+            max-height: 55vh;
             background: white;
             border-radius: 3px;
             outline-style: solid;
             padding: 1rem;
             display: flex;
             flex-direction: column;
-            flex-wrap: wrap;
             justify-content: flex-start;
             align-items: flex-start;
             word-spacing: 0.2rem;
             filter: drop-shadow(0 0 0.75rem rgb(112, 112, 112));
+            overflow: hidden;
+        }
+
+        #dialogue {
+            overflow-y: auto;
+            flex: 1;
+            width: 100%;
+            padding-right: 4px;
+        }
+
+        #dialogue::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #dialogue::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
         }
 
         .ui-text {
@@ -117,39 +136,278 @@
             padding-left: 10px;
             margin-top: 15px;
             font-weight: 3px;
-
         }
 
         .box h3 {
             text-decoration: underline;
+        }
+
+
+
+        /* ── GUESTBOOK FORM (inside dialogue, ContactMe room) ── */
+        .guestbook-form {
+            margin-top: 14px;
+            background: #f9f9f9;
+            border: 1.5px solid #ccc;
+            border-radius: 6px;
+            padding: 12px 14px;
+            font-family: monogram, monospace;
+        }
+
+        .gb-label {
+            font-size: 1rem;
+            color: #333;
+            margin: 0 0 8px;
+            display: block;
+        }
+
+        .gb-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .gb-input {
+            flex: 1;
+            background: #fff;
+            border: 1.5px solid #bbb;
+            border-radius: 4px;
+            color: #222;
+            font-family: monogram, monospace;
+            font-size: 0.9rem;
+            padding: 5px 9px;
+            outline: none;
+        }
+
+        .gb-input:focus {
+            border-color: #f7a100;
+        }
+
+        .gb-textarea {
+            width: 100%;
+            background: #fff;
+            border: 1.5px solid #bbb;
+            border-radius: 4px;
+            color: #222;
+            font-family: monogram, monospace;
+            font-size: 0.9rem;
+            padding: 5px 9px;
+            outline: none;
+            resize: none;
+            height: 56px;
+            display: block;
+            margin-bottom: 8px;
+            box-sizing: border-box;
+        }
+
+        .gb-textarea:focus {
+            border-color: #f7a100;
+        }
+
+        .gb-submit {
+            background: #45474B;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 16px;
+            font-family: monogram, monospace;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .gb-submit:hover {
+            background: #f7a100;
+            color: #1a1a1a;
+        }
+
+        .gb-submit:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .gb-success {
+            color: #2e7d32;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* ── ADMIN PANEL ── */
+        #admin-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 99998;
+            backdrop-filter: blur(2px);
+        }
+
+        #admin-panel {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 99999;
+            width: 520px;
+            max-height: 75vh;
+            background: #0f0f1a;
+            color: #e0e0e0;
+            border: 2px solid #e94560;
+            border-radius: 12px;
+            padding: 18px 20px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            box-shadow: 0 0 50px rgba(233, 69, 96, 0.3);
+            overflow-y: auto;
+        }
+
+        #admin-panel::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        #admin-panel::-webkit-scrollbar-thumb {
+            background: #e94560;
+            border-radius: 2px;
+        }
+
+        .admin-hdr {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e94560;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .admin-hdr h2 {
+            color: #e94560;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 7px;
+            margin-bottom: 10px;
+        }
+
+        .a-tab {
+            cursor: pointer;
+            background: transparent;
+            color: #777;
+            border: 1px solid #2a2a2a;
+            border-radius: 4px;
+            padding: 3px 10px;
+            font-family: monospace;
+            font-size: 0.75rem;
+            transition: all 0.15s;
+        }
+
+        .a-tab.active,
+        .a-tab:hover {
+            border-color: #e94560;
+            color: #e94560;
+        }
+
+        #admin-close {
+            cursor: pointer;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 10px;
+            font-family: monospace;
+            font-size: 0.78rem;
+        }
+
+        .v-card,
+        .g-card,
+        .dl-card {
+            background: #131324;
+            border-left: 3px solid #e94560;
+            padding: 7px 10px;
+            margin-bottom: 7px;
+            border-radius: 4px;
+            line-height: 1.6;
+        }
+
+        .g-card {
+            border-left-color: #f7a100;
+        }
+
+        .dl-card {
+            border-left-color: #4caf50;
+        }
+
+        .v-card .n {
+            color: #e94560;
+            font-weight: bold;
+        }
+
+        .g-card .n {
+            color: #f7a100;
+            font-weight: bold;
+        }
+
+        .dl-card .n {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .admin-ftr {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #666;
+            font-size: 0.72rem;
+        }
+
+        .a-clear {
+            cursor: pointer;
+            background: transparent;
+            color: #e94560;
+            border: 1px solid #e94560;
+            border-radius: 4px;
+            padding: 3px 9px;
+            font-family: monospace;
+            font-size: 0.72rem;
         }
     </style>
 </head>
 
 <body>
     <nav>
-        <a href="./TanmayGupta_Resume.pdf" target="_blank" style="text-decoration: none; color: white;">Tanmay Gupta</a>
+        <a href="https://drive.google.com/uc?export=download&id=1356MzWXQWdQB-ywZRAXKHGvIYmfqzih1" target="_blank"
+            id="resume-nav-link" style="text-decoration: none; color: white;">Tanmay Gupta</a>
     </nav>
-    </nav>
+
     <div id="app">
+        <!-- ORIGINAL SIDEBAR — restored, overflow fixed so Controls heading no longer clips -->
         <div class="box">
             <h2>About</h2>
             <h3>Welcome to my portfolio!</h3>
             <ul>
-                <li>Download my latest <a href="./TanmayGupta_220953470_Computer&CommunicationEngg.pdf" target="_blank"
-                        style="color:black">Resume</a> or play around to know more about me</li>
+                <li>Download my latest <a
+                        href="https://drive.google.com/uc?export=download&id=1356MzWXQWdQB-ywZRAXKHGvIYmfqzih1"
+                        target="_blank" id="resume-sidebar-link" style="color:black">Resume</a> or play around to know
+                    more about me</li>
                 <li>Each Room in this map reflects a part of my personal story.</li>
                 <li>Explore the rooms through the character to discover more about me.</li>
             </ul>
-            <h3>Controls</h3>
+            <h3 style="margin-top: 6px;">Controls</h3>
             <ul>
+                <li><button id="go-contact-btn"
+                        style="font-family: monogram, monospace; font-size: 0.9rem; background: #45474B; color: #fff; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer;">Go
+                        to Contact</button></li>
                 <li>Tap/Click around to move</li>
                 <li>You can also use arrow keys</li>
             </ul>
         </div>
+
         <div>
             <p class="note">Tap/Click around to move</p>
-
             <div id="textbox-container" style="display: none">
                 <div id="textbox">
                     <p id="dialogue" class="ui-text"></p>
@@ -159,9 +417,291 @@
                 </div>
             </div>
         </div>
+
         <canvas id="game"></canvas>
     </div>
+
+    <!-- Guestbook template (cloned into ContactMe dialogue) -->
+    <template id="guestbook-tpl">
+        <div class="guestbook-form">
+            <span class="gb-label">✍ Leave a message — let me know you stopped by!</span>
+            <div class="gb-row">
+                <input class="gb-input" id="gb-name" type="text" placeholder="Your name *" maxlength="50"
+                    autocomplete="off" />
+            </div>
+            <textarea class="gb-textarea" id="gb-msg" placeholder="Write a short note... (optional)"
+                maxlength="200"></textarea>
+            <button class="gb-submit" id="gb-send">Send Message ✉</button>
+            <p class="gb-success" id="gb-ok">✅ Saved! Thanks for visiting 🙌</p>
+        </div>
+    </template>
+
+    <!-- Admin overlay + panel -->
+    <div id="admin-overlay"></div>
+    <div id="admin-panel">
+        <div class="admin-hdr">
+            <h2>📊 Admin — Portfolio Analytics</h2>
+            <button id="admin-close">✕ Close</button>
+        </div>
+        <div class="admin-tabs">
+            <button class="a-tab active" id="tab-visits">🌐 Visitors</button>
+            <button class="a-tab" id="tab-gb">✍ Guestbook</button>
+            <button class="a-tab" id="tab-dl">📄 Downloads</button>
+        </div>
+        <div id="admin-content"></div>
+        <div class="admin-ftr">
+            <span id="admin-total"></span>
+            <button class="a-clear" id="admin-clear">🗑 Clear Tab Data</button>
+        </div>
+    </div>
+
     <script type="module" src="./main.js"></script>
+
+    <script type="module">
+        (function () {
+            const VISITS_KEY = "tg_portfolio_visits";
+            const GB_KEY = "tg_portfolio_guestbook";
+            const DL_KEY = "tg_portfolio_downloads";
+            const navigateToRoom = (room) => {
+                if (!room) return;
+
+                if (typeof window.portfolioNavigateToRoom === "function") {
+                    window.portfolioNavigateToRoom(room);
+                    return;
+                }
+
+                window.__portfolioPendingRoom = room;
+                window.dispatchEvent(new CustomEvent("portfolio:navigate-room", { detail: { room } }));
+            };
+
+            const goContactBtn = document.getElementById("go-contact-btn");
+            if (goContactBtn) {
+                goContactBtn.addEventListener("click", () => {
+                    navigateToRoom("ContactMe");
+                });
+            }
+
+            const getVisits = () => { try { return JSON.parse(localStorage.getItem(VISITS_KEY)) || []; } catch (e) { return []; } };
+            const getGB = () => { try { return JSON.parse(localStorage.getItem(GB_KEY)) || []; } catch (e) { return []; } };
+            const getDL = () => { try { return JSON.parse(localStorage.getItem(DL_KEY)) || []; } catch (e) { return []; } };
+            const saveVisits = v => localStorage.setItem(VISITS_KEY, JSON.stringify(v));
+            const saveGB = v => localStorage.setItem(GB_KEY, JSON.stringify(v));
+            const saveDL = v => localStorage.setItem(DL_KEY, JSON.stringify(v));
+
+            /* ── Record visit on page load ── */
+            (async () => {
+                let geo = {};
+                try { const r = await fetch("https://ipapi.co/json/"); geo = await r.json(); } catch (_) { }
+                const ua = navigator.userAgent;
+                const visit = {
+                    time: new Date().toLocaleString(),
+                    city: geo.city || "Unknown",
+                    region: geo.region || "",
+                    country: geo.country_name || "Unknown",
+                    ip: geo.ip || "Hidden",
+                    isp: geo.org || "Unknown",
+                    device: /Mobi|Android/i.test(ua) ? "📱 Mobile" : "💻 Desktop",
+                    browser: ua.includes("Firefox") ? "Firefox" : ua.includes("Edg") ? "Edge" : ua.includes("Chrome") ? "Chrome" : ua.includes("Safari") ? "Safari" : "Other",
+                    os: ua.includes("Windows") ? "Windows" : ua.includes("Android") ? "Android" : (ua.includes("iPhone") || ua.includes("iPad")) ? "iOS" : ua.includes("Mac") ? "macOS" : ua.includes("Linux") ? "Linux" : "Other",
+                    ref: document.referrer || "Direct",
+                };
+                const visits = getVisits();
+                visits.unshift(visit);
+                if (visits.length > 200) visits.length = 200;
+                saveVisits(visits);
+            })();
+
+            /* ── Track resume downloads ── */
+            function trackDownload(source) {
+                const dl = getDL();
+                dl.unshift({ time: new Date().toLocaleString(), source });
+                if (dl.length > 200) dl.length = 200;
+                saveDL(dl);
+            }
+
+            // Nav link click
+            const navLink = document.getElementById("resume-nav-link");
+            if (navLink) navLink.addEventListener("click", () => trackDownload("Nav bar — Tanmay Gupta link"));
+
+            // Sidebar link click
+            const sidebarLink = document.getElementById("resume-sidebar-link");
+            if (sidebarLink) sidebarLink.addEventListener("click", () => trackDownload("Sidebar — Resume link"));
+
+            // Dialogue box — watch for resume links appearing inside dialogues
+            const dlObserver = new MutationObserver(() => {
+                document.querySelectorAll('#dialogue a[href*="drive.google.com"], #dialogue a[href*=".pdf"]').forEach(a => {
+                    if (!a.dataset.tracked) {
+                        a.dataset.tracked = "1";
+                        a.addEventListener("click", () => trackDownload("Dialogue — " + (a.textContent.trim() || "Resume link")));
+                    }
+                });
+            });
+            dlObserver.observe(document.body, { childList: true, subtree: true });
+
+            /* ── Inject guestbook form into ContactMe dialogue ── */
+            const gbObserver = new MutationObserver(() => {
+                const container = document.getElementById("textbox-container");
+                const dialogue = document.getElementById("dialogue");
+                if (!container || container.style.display === "none") return;
+                if (!dialogue || !dialogue.innerHTML.includes("Contact Me")) return;
+                if (dialogue.querySelector(".guestbook-form")) return;
+
+                const clone = document.getElementById("guestbook-tpl").content.cloneNode(true);
+                dialogue.appendChild(clone);
+
+                document.getElementById("gb-send").addEventListener("click", () => {
+                    const name = (document.getElementById("gb-name").value || "").trim();
+                    const msg = (document.getElementById("gb-msg").value || "").trim();
+                    if (!name) { document.getElementById("gb-name").focus(); return; }
+                    const gb = getGB();
+                    gb.unshift({ time: new Date().toLocaleString(), name, msg });
+                    if (gb.length > 100) gb.length = 100;
+                    saveGB(gb);
+                    document.getElementById("gb-send").disabled = true;
+                    document.getElementById("gb-ok").style.display = "block";
+                });
+            });
+            gbObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["style"] });
+
+            /* ── Admin Panel ── */
+            const panel = document.getElementById("admin-panel");
+            const overlay = document.getElementById("admin-overlay");
+            const content = document.getElementById("admin-content");
+            const totalEl = document.getElementById("admin-total");
+            let tab = "visits";
+
+            const renderVisits = () => {
+                const v = getVisits();
+                totalEl.textContent = `Total sessions: ${v.length}`;
+                content.innerHTML = v.length === 0 ? "<p style='color:#555'>No visits yet.</p>"
+                    : v.map((x, i) => `<div class="v-card"><span class="n">#${v.length - i}</span> &nbsp;${x.time}<br>📍 ${x.city}${x.region ? ", " + x.region : ""}, <b>${x.country}</b><br>🌐 ${x.ip} · ${x.isp}<br>${x.device} · ${x.browser} / ${x.os}<br>🔗 <span style="color:#666">${x.ref}</span></div>`).join("");
+            };
+            const renderGB = () => {
+                const g = getGB();
+                totalEl.textContent = `Total messages: ${g.length}`;
+                content.innerHTML = g.length === 0 ? "<p style='color:#555'>No guestbook entries yet.</p>"
+                    : g.map((x, i) => `<div class="g-card"><span class="n">#${g.length - i}</span> &nbsp;${x.time}<br>👤 <b>${x.name}</b>${x.role ? " · " + x.role : ""}${x.msg ? "<br>💬 " + x.msg : ""}</div>`).join("");
+            };
+            const renderDL = () => {
+                const d = getDL();
+                totalEl.textContent = `Total resume downloads: ${d.length}`;
+                content.innerHTML = d.length === 0 ? "<p style='color:#555'>No downloads tracked yet.</p>"
+                    : d.map((x, i) => `<div class="dl-card"><span class="n">#${d.length - i}</span> &nbsp;${x.time}<br>📄 ${x.source}</div>`).join("");
+            };
+
+            const openPanel = () => {
+                tab = "visits";
+                document.getElementById("tab-visits").classList.add("active");
+                document.getElementById("tab-gb").classList.remove("active");
+                document.getElementById("tab-dl").classList.remove("active");
+                renderVisits();
+                panel.style.display = "block";
+                overlay.style.display = "block";
+            };
+            const closePanel = () => { panel.style.display = "none"; overlay.style.display = "none"; };
+
+            document.getElementById("tab-visits").addEventListener("click", () => { tab = "visits"; document.getElementById("tab-visits").classList.add("active"); document.getElementById("tab-gb").classList.remove("active"); document.getElementById("tab-dl").classList.remove("active"); renderVisits(); });
+            document.getElementById("tab-gb").addEventListener("click", () => { tab = "gb"; document.getElementById("tab-gb").classList.add("active"); document.getElementById("tab-visits").classList.remove("active"); document.getElementById("tab-dl").classList.remove("active"); renderGB(); });
+            document.getElementById("tab-dl").addEventListener("click", () => { tab = "dl"; document.getElementById("tab-dl").classList.add("active"); document.getElementById("tab-visits").classList.remove("active"); document.getElementById("tab-gb").classList.remove("active"); renderDL(); });
+
+            document.getElementById("admin-close").addEventListener("click", closePanel);
+            overlay.addEventListener("click", closePanel);
+            document.getElementById("admin-clear").addEventListener("click", () => {
+                const label = tab === "visits" ? "visitor" : tab === "gb" ? "guestbook" : "download";
+                if (confirm(`Clear all ${label} records?`)) {
+                    if (tab === "visits") saveVisits([]);
+                    else if (tab === "gb") saveGB([]);
+                    else saveDL([]);
+                    tab === "visits" ? renderVisits() : tab === "gb" ? renderGB() : renderDL();
+                }
+            });
+
+            /* Secret: Ctrl + Shift + A → asks for PIN */
+            const ADMIN_PIN = (import.meta.env.VITE_ADMIN_PIN || "").trim();
+            let pinBuffer = "";
+
+            document.addEventListener("keydown", e => {
+                if (e.ctrlKey && e.shiftKey && e.key === "A") {
+                    e.preventDefault();
+                    showPinPrompt();
+                }
+            });
+
+            function showPinPrompt() {
+                // Remove any existing prompt
+                const existing = document.getElementById("pin-overlay");
+                if (existing) existing.remove();
+
+                const pinOverlay = document.createElement("div");
+                pinOverlay.id = "pin-overlay";
+                pinOverlay.style.cssText = `
+                position:fixed; inset:0; background:rgba(0,0,0,0.75);
+                z-index:999999; display:flex; align-items:center; justify-content:center;
+                backdrop-filter:blur(4px);
+            `;
+                pinOverlay.innerHTML = `
+                <div style="background:#0f0f1a; border:2px solid #e94560; border-radius:12px;
+                            padding:28px 32px; font-family:monospace; text-align:center;
+                            box-shadow:0 0 40px rgba(233,69,96,0.4); min-width:260px;">
+                    <div style="color:#e94560; font-size:1rem; font-weight:bold; margin-bottom:6px;">
+                        🔐 Admin Access
+                    </div>
+                    <div style="color:#888; font-size:0.75rem; margin-bottom:16px;">Enter your PIN to continue</div>
+                    <input id="pin-input" type="password" maxlength="10"
+                        placeholder="PIN"
+                        style="background:#1a1a2e; border:1.5px solid #333; border-radius:6px;
+                               color:#fff; font-family:monospace; font-size:1rem;
+                               padding:8px 14px; outline:none; width:100%; box-sizing:border-box;
+                               text-align:center; letter-spacing:4px;"
+                    />
+                    <div id="pin-error" style="color:#e94560; font-size:0.72rem; margin-top:8px; display:none;">
+                        ❌ Incorrect PIN
+                    </div>
+                    <div style="display:flex; gap:10px; margin-top:16px;">
+                        <button id="pin-cancel"
+                            style="flex:1; background:transparent; color:#777; border:1px solid #333;
+                                   border-radius:6px; padding:7px; font-family:monospace;
+                                   font-size:0.8rem; cursor:pointer;">
+                            Cancel
+                        </button>
+                        <button id="pin-confirm"
+                            style="flex:1; background:#e94560; color:#fff; border:none;
+                                   border-radius:6px; padding:7px; font-family:monospace;
+                                   font-size:0.8rem; cursor:pointer; font-weight:bold;">
+                            Enter
+                        </button>
+                    </div>
+                </div>
+            `;
+                document.body.appendChild(pinOverlay);
+
+                const input = document.getElementById("pin-input");
+                const errMsg = document.getElementById("pin-error");
+                const confirm = document.getElementById("pin-confirm");
+                const cancel = document.getElementById("pin-cancel");
+
+                setTimeout(() => input.focus(), 50);
+
+                function tryPin() {
+                    if (input.value === ADMIN_PIN) {
+                        pinOverlay.remove();
+                        openPanel();
+                    } else {
+                        errMsg.style.display = "block";
+                        input.value = "";
+                        input.focus();
+                        input.style.borderColor = "#e94560";
+                        setTimeout(() => { input.style.borderColor = "#333"; }, 1000);
+                    }
+                }
+
+                confirm.addEventListener("click", tryPin);
+                cancel.addEventListener("click", () => pinOverlay.remove());
+                input.addEventListener("keydown", e => { if (e.key === "Enter") tryPin(); if (e.key === "Escape") pinOverlay.remove(); });
+                pinOverlay.addEventListener("click", e => { if (e.target === pinOverlay) pinOverlay.remove(); });
+            }
+        })();
+    </script>
 </body>
 
 </html>

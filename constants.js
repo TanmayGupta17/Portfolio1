@@ -4,28 +4,47 @@ export const scaleFactor = 1.3;
 export const dialogueData = {
     "Summary": "Hey 👋 I’m Tanmay. I’m a Computer and Communication Engineering student at MIT who likes building things that people actually use. I spend most of my time turning vague ideas into working products, breaking stuff along the way, and learning fast from it 🚀",
     "Projects": "I’ve worked on a few projects that blend technology with real-world use cases. Some of my key projects include Jarvis, a personal voice assistant; LeaseLink, a property rental web platform; and Stonks, a gamified way to learn the stock market, designed to make investing concepts more engaging and beginner-friendly. Each project helped me strengthen my understanding of backend logic, system design, and building user-focused products.For more interesting projects, check out my <a href=https://github.com/TanmayGupta17>GitHub</a>!",
-    "Education": "I completed my 10th and 12th grades under the Central Board of Secondary Education (CBSE).which provided a strong educational framework and academic rigor. These formative years were instrumental in nurturing my interest in computer science and engineering. Currently, I am pursuing a degree in Computer and Communication Engineering at the Manipal Institute of Technology (MIT). Here, I am continuously expanding my knowledge and honing my skills in this dynamic and ever-evolving field.",
+    "Experience": `<h3>Experience</h3>
+    <div style="margin-bottom: 12px;">
+        <strong>🎓 B.Tech — Computer & Communication Engineering</strong><br/>
+        Manipal Institute of Technology &nbsp;|&nbsp; 2022 – 2026<br/>
+        <span style="font-size:0.85em; opacity:0.85;">Building a strong foundation in system design, DSA, full-stack development, and backend engineering.</span>
+    </div>
+    <div style="margin-bottom: 12px;">
+        <strong>📄 12th Grade — Science (CBSE)</strong><br/>
+        Central Board of Secondary Education &nbsp;|&nbsp; 2022
+    </div>
+    <div style="margin-bottom: 12px;">
+        <strong>📄 10th Grade — Science (CBSE)</strong><br/>
+        Central Board of Secondary Education &nbsp;|&nbsp; 2020
+    </div>
+    <hr style="border: 1px solid #333; margin: 10px 0;"/>
+    <div style="margin-bottom: 12px;">
+        <strong>💼 Software Development Engineer Intern</strong><br/>
+        RedSeer Strategy Consultants &nbsp;|&nbsp; Jan 2026 – Present<br/>
+        <span style="font-size:0.85em; opacity:0.85;">Built an internal feedback management system (Django + React + MySQL), designed role-based REST APIs, and implemented automated reminder workflows.</span>
+    </div>
+    <div style="margin-bottom: 12px;">
+        <strong>💼 Software Development Intern</strong><br/>
+        UnQue CloudBook &nbsp;|&nbsp; Jan 2025 – Mar 2025<br/>
+        <span style="font-size:0.85em; opacity:0.85;">Resolved backend bugs, collaborated with senior engineers on feature delivery, and participated in agile sprint cycles.</span>
+    </div>`,
     "Skills": "Over the years, I’ve worked with programming languages such as Java, Python, C, C#, JavaScript, and MySQL, along with front-end technologies like HTML and CSS. I’ve also built applications using frameworks and tools like Node.js, Express, React, Next.js, and MongoDB. Alongside this, I regularly use Git, GitHub, VS Code, and Visual Studio, which have helped me collaborate better and maintain an efficient development workflow",
-    "ContactMe": `<h3>Contact Me</h3>
-    <div style="display: flex; margin-right: 10px;">
-        <div class="Email" style="border: 2px solid #333; padding: 5px 10px; border-radius: 10px; width: 125px; background-color: #e30d0d; color: white; height: 40px;">
-            <p style="display: flex; align-items: center; color: white; height: 100%; margin: 0;">
-                <img src="./gmailLogo.jpg" alt="Email" style="width: 25px; height: 20px; margin-right: 10px;" />
-                <a href="mailto:TanmayGupta1706@gmail.com" style="color: white; text-decoration: none;">Email</a>
-            </p>
-        </div>
-        <div class="Github" style="border: 2px solid #333; padding: 5px 10px; border-radius: 10px; width: 125px; background-color: black; margin-left: 20px; height: 40px;">
-            <p style="display: flex; align-items: center; height: 100%; margin: 0;">
-                <img src="./githubLogo.jpg" alt="GitHub" style="width: 25px; height: 20px; margin-right: 10px;" />
-                <a href="https://github.com/TanmayGupta17" target="_blank" style="color: white; text-decoration: none;">GitHub</a>
-            </p>
-        </div>
-        <div class="Linkdin" style="border: 2px solid #333; padding: 5px 10px; border-radius: 10px; width: 125px; background-color: #0166c8; margin-left: 20px; height: 40px;">
-            <p style="display: flex; align-items: center; height: 100%; margin: 0;">
-                <img src="./linkdinlogo.avif" alt="GitHub" style="width: 25px; height: 20px; margin-right: 10px;" />
-                <a href="https://www.linkedin.com/in/tanmay-gupta-link/" target="_blank" style="color: white; text-decoration: none;">Linkedin</a>
-            </p>
-        </div>
+    "ContactMe": `<h3 style="margin: 0 0 4px; line-height: 1;">Contact Me</h3>
+    <p style="color:#aaa; font-size:0.85em; margin: 0 0 10px;">Open to internships, collaborations, and interesting conversations. Let's connect!</p>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 4px;">
+        <a href="mailto:TanmayGupta1706@gmail.com" style="display:flex; align-items:center; gap:7px; background:#c0392b; color:white; text-decoration:none; padding:7px 14px; border-radius:7px; font-size:0.88em; border: 1px solid #e74c3c;">
+            <img src="./gmailLogo.jpg" alt="Email" style="width:18px; height:14px; border-radius:2px;" />
+            Email
+        </a>
+        <a href="https://github.com/TanmayGupta17" target="_blank" style="display:flex; align-items:center; gap:7px; background:#1a1a1a; color:white; text-decoration:none; padding:7px 14px; border-radius:7px; font-size:0.88em; border: 1px solid #444;">
+            <img src="./githubLogo.jpg" alt="GitHub" style="width:18px; height:18px; border-radius:50%;" />
+            GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/tanmay-gupta-link/" target="_blank" style="display:flex; align-items:center; gap:7px; background:#0a66c2; color:white; text-decoration:none; padding:7px 14px; border-radius:7px; font-size:0.88em; border: 1px solid #1a86e2;">
+            <img src="./linkdinlogo.avif" alt="LinkedIn" style="width:18px; height:18px; border-radius:3px;" />
+            LinkedIn
+        </a>
     </div>`
 
 
