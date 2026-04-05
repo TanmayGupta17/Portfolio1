@@ -540,9 +540,9 @@ k.scene("main", async () => {
         isLineClear(autoMovePath[autoMovePath.length - 1], targetWorldPos) &&
         (
           Math.abs(autoMovePath[autoMovePath.length - 1].x - targetWorldPos.x) <
-            navCellSize * scaleFactor * 0.5 ||
+          navCellSize * scaleFactor * 0.5 ||
           Math.abs(autoMovePath[autoMovePath.length - 1].y - targetWorldPos.y) <
-            navCellSize * scaleFactor * 0.5
+          navCellSize * scaleFactor * 0.5
         )
       ) {
         autoMovePath.push(targetWorldPos);
