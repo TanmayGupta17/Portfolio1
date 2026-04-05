@@ -760,6 +760,7 @@
             const CONTACT_EMAIL = "TanmayGupta1706@gmail.com";
             const CONTACT_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
             const bodyEl = document.body;
+            bodyEl.tabIndex = -1;
             const navigateToRoom = (room) => {
                 if (!room) return;
 
@@ -994,8 +995,9 @@
             const ADMIN_PIN = (import.meta.env.VITE_ADMIN_PIN || "").trim();
             const ADMIN_TRIGGER = "admin";
             let adminKeyBuffer = "";
+            let lastAdminKeyAt = 0;
 
-            document.addEventListener("keydown", e => {
+            const handleAdminTriggerKey = (e) => {
                 const activeTag = document.activeElement?.tagName;
                 const isTypingField =
                     activeTag === "INPUT" ||
@@ -1013,12 +1015,24 @@
                     return;
                 }
 
+                const now = Date.now();
+                if (now - lastAdminKeyAt > 1800) {
+                    adminKeyBuffer = "";
+                }
+                lastAdminKeyAt = now;
+
                 adminKeyBuffer = (adminKeyBuffer + e.key.toLowerCase()).slice(-ADMIN_TRIGGER.length);
                 if (adminKeyBuffer === ADMIN_TRIGGER) {
                     adminKeyBuffer = "";
                     showPinPrompt();
                 }
-            });
+            };
+
+            window.addEventListener("keydown", handleAdminTriggerKey, true);
+            document.addEventListener("keydown", handleAdminTriggerKey, true);
+            window.addEventListener("pointerdown", () => {
+                bodyEl.focus({ preventScroll: true });
+            }, { passive: true });
 
             function showPinPrompt() {
                 // Remove any existing prompt
