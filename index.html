@@ -107,6 +107,7 @@
             background: #f5f7f8;
         }
 
+
         .zoom-controls {
             position: fixed;
             top: 96px;
@@ -678,7 +679,7 @@
     <div id="app">
         <!-- ORIGINAL SIDEBAR — restored, overflow fixed so Controls heading no longer clips -->
         <div class="box">
-            <h2>About</h2>
+            <h2 id="about-heading">About</h2>
             <h3>Welcome to my portfolio!</h3>
             <ul>
                 <li>Download my latest <a
@@ -777,6 +778,9 @@
             const zoomOutBtn = document.getElementById("zoom-out-btn");
             const zoomResetBtn = document.getElementById("zoom-reset-btn");
             const menuToggleBtn = document.getElementById("menu-toggle-btn");
+            const aboutHeading = document.getElementById("about-heading");
+            let aboutClickCount = 0;
+            let aboutClickTimer = null;
             if (zoomInBtn) zoomInBtn.addEventListener("click", () => window.portfolioZoomIn?.());
             if (zoomOutBtn) zoomOutBtn.addEventListener("click", () => window.portfolioZoomOut?.());
             if (zoomResetBtn) zoomResetBtn.addEventListener("click", () => window.portfolioZoomReset?.());
@@ -801,6 +805,30 @@
                     const willOpen = !bodyEl.classList.contains("panel-open");
                     bodyEl.classList.toggle("panel-open", willOpen);
                     menuToggleBtn.setAttribute("aria-expanded", willOpen ? "true" : "false");
+                });
+            }
+
+            if (aboutHeading) {
+                aboutHeading.addEventListener("click", (event) => {
+                    aboutClickCount += 1;
+
+                    if (aboutClickTimer) {
+                        clearTimeout(aboutClickTimer);
+                    }
+
+                    aboutClickTimer = setTimeout(() => {
+                        aboutClickCount = 0;
+                        aboutClickTimer = null;
+                    }, 650);
+
+                    if (aboutClickCount >= 3) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        aboutClickCount = 0;
+                        clearTimeout(aboutClickTimer);
+                        aboutClickTimer = null;
+                        showPinPrompt();
+                    }
                 });
             }
 
